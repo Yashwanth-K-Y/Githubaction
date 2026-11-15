@@ -1,4 +1,4 @@
-name: Vprofile CICD workflow
+name: Build Job
 
 on: 
   push:
@@ -7,23 +7,24 @@ on:
 
 jobs:
   Build:
-    runs on: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
-      - name: code checkout
-      - uses: actions/checkoutv@4
+      - name: Code checkout
+        uses: actions/checkout@v4
 
-      - name: maven build
-      - run: mvn install
-  
+      - name: Maven Build
+        run: mvn install
+
+
   Testing:
     runs-on: ubuntu-latest
     needs: Build
     steps:
-      - name: code checkout
-      - uses: actions/checkout@v4
+      - name: Code checkout
+        uses: actions/checkout@v4
 
-      - name: run test on main branch
-      - run: mvn test
+      - name: Run tests on main branch
+        run: mvn test
 
-      - name: checkstyle
-      - run: mvc checkstyle:checksyle
+      - name: Checkstyle
+        run: mvn checkstyle:checkstyle
